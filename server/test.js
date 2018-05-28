@@ -72,3 +72,35 @@ function quickSort(arr, l , r) {
 
     return arr;
 }
+
+function quickSort1(arr, l , r) {
+    if (l > r) return
+    else {
+        let i = l,
+            j = r,
+            x = arr[i];
+        
+        while (i != j) {
+            while (arr[j] > x && i < j) {
+                j--;
+            }
+            if (i < j) {
+                arr[i++] = arr[j];
+            }
+
+            while (arr[i] < x && i < j) {
+                i++;
+            }
+            if (i < j) {
+                arr[j--] = arr[i];
+            }
+        }
+
+        arr[i] = x;
+
+        quickSort1(arr, l, r-1);    
+        quickSort1(arr, l+1, r);
+    }
+
+    return arr;
+}
