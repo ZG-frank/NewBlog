@@ -1,20 +1,27 @@
-const router = require('koa-router')();
+const Router = require('koa-router');
 const compose = require('koa-compose');
 const convert = require('koa-convert');
 
 const config = require('../configs');
+const requireDir = require('require-dir');
+const allRouters = requireDir('./routers');
 
-const articleController = require('../controllers/articles.js');
-console.log(articleController);
+console.log(allRouters, 'test');
 
+api = () => {
+    const router = new Router({
+        prefix: config.app.baseApi,
+    });
 
-router
-    //  用户模块api
-    .get('/', function(ctx) {
-        ctx.response.body = '<h1>hello Koa1111</h1>';
-    })
-    .post('/api/article/create', articleController.create)         // 用户登录
+    Object.keys(allRouters).forEach(name => {
+        console.log(allRouters,name,allRouters[name],typeof allRouters[name], router)
+        if(name) allRouters[name](router);
+    });
 
+    return convert.compose([
+        router.routes(),
+        router.allowedMethods(),
+    ]);
+}
 
-
-module.exports = router;
+module.exports = api;
