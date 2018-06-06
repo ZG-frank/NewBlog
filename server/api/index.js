@@ -15,7 +15,9 @@ api = () => {
 
     Object.keys(allRouters).forEach(name => {
         console.log(allRouters,name,allRouters[name],typeof allRouters[name], router)
-        if(name) allRouters[name](router);
+        if (typeof allRouters[name] === 'function') {
+            allRouters[name](router)
+        };
     });
 
     return convert.compose([

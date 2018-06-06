@@ -1,7 +1,5 @@
-// import * as $ from '../../controllers/articles_controller.js';
 // import verify from '../../middleware/verify.js';
-// const router = require('koa-router')();
-const articleController = require('../../controllers/articles.js');
+const articleController = require('../../controllers/article');
 
 articleRouter = (router) => {
     router
@@ -13,7 +11,7 @@ articleRouter = (router) => {
         })
         // .get('/api/articles', articleController.getAllArticles)
         // .post('/articles', articleController.createArticle)
-        .post('/api/article/create', articleController.create)
+        .post('/article/create', articleController.create)
 }
 
 module.exports = articleRouter;

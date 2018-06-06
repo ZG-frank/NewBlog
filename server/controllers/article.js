@@ -1,4 +1,4 @@
-const Article = require('../models/article.js');
+const Article = require('../models/article');
 // import md5 from 'md5';
 const jwt = require('koa-jwt');
 const config = require('../configs/');
