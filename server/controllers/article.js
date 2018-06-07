@@ -8,41 +8,44 @@ create = async (ctx) => {
     let body = ctx.request.body;
     console.log(ctx.request,body);
 
-    const title = body.title;
-    const content = body.content;
-    const abstract = body.abstract;
-    const isPublished = body.isPublished;
-    const tag = body.tag;
-    const createdTime = new Date();
-    const modifiedTime = new Date();
-    const commentCount = 0;
+    let title = body.title;
+    let content = body.content;
+    let abstract = body.abstract;
+    let isPublished = body.isPublished;
+    let tag = body.tag;
+    let createdTime = new Date();
+    let modifiedTime = new Date();
+    let commentCount = 0;
 
-    if (!title) {
-        ctx.throw(402, {
-            code: 13,
-            data: null,
-            message: '标题不能为空',
-            space: 50
-        });
-    }
-    if (!content) {
-        ctx.throw(402, {
-            code: 13,
-            data: null,
-            message: '文章内容不能为空',
-            space: 50
-        });
-    }
-    if (!abstract) {
-        ctx.throw(402, {
-            code: 13,
-            data: null,
-            message: '摘要不能为空',
-            space: 50
-        });
-    }
+    checkValue(title, ctx, '标题');
+    checkValue(content, ctx, '内容');
+    checkValue(abstract, ctx, '摘要');
+    // if (!title) {
+    //     ctx.throw(402, {
+    //         code: 13,
+    //         data: null,
+    //         message: '标题不能为空',
+    //         space: 50
+    //     });
+    // }
+    // if (!content) {
+    //     ctx.throw(402, {
+    //         code: 13,
+    //         data: null,
+    //         message: '文章内容不能为空',
+    //         space: 50
+    //     });
+    // }
+    // if (!abstract) {
+    //     ctx.throw(402, {
+    //         code: 13,
+    //         data: null,
+    //         message: '摘要不能为空',
+    //         space: 50
+    //     });
+    // }
 
-    const article = new Article({
+    let article = new Article({
         title,
         content,
         abstract,
@@ -76,16 +79,38 @@ create = async (ctx) => {
     });
 }
 
-getById = async (ctx) => {
-    const id = ctx.params.id;
-
-    if (!id) {
-        ctx.throw(402, 'id不能为空');
+checkValue = (value, ctx, title) => {
+    if (!value) {
+        ctx.throw(402, {
+            code: 13,
+            data: null,
+            message: `${title}不能为空`,
+            space: 50
+        });
     }
+}
+
+getById = async (ctx) => {
+    let id = ctx.params.id;
+
+    checkValue(id, ctx, 'id');
+    // if (!id) {
+    //     ctx.throw(402, {
+    //         code: 13,
+    //         data: null,
+    //         message: 'id不能为空',
+    //         space: 50
+    //     });
+    // }
 
     let getResult = await article.findById().catch(err => {
         if (err.name === 'CastError') {
-            ctx.throw(402, 'id不存在');
+            ctx.throw(402, {
+                code: 17,
+                data: null,
+                message: 'id不存在',
+                space: 50
+            });
         } else {
             ctx.throw(500, '服务器内部错误');
         }
@@ -106,7 +131,73 @@ getById = async (ctx) => {
     });
 }
 
+deleteById = async (ctx) => {
+    let id = ctx.params.id;
+
+    checkValue(id, ctx, 'id');
+
+    let result = await Article.findByIdAndRemove(id).catch(err => {
+        if (err.name === 'CastError') {
+            ctx.throw(402, {
+                code: 17,
+                data: null,
+                message: 'id不存在',
+                space: 50
+            });
+        } else {
+            this.throw(500, '服务器内部错误');
+        }
+    });
+
+    response(ctx, {
+        code: 1,
+        data: null,
+        message: null,
+        space: 50
+    });
+}
+
+update = async (ctx) => {
+    let body = ctx.request.body;
+
+    let newData = {
+        ...body,
+        modifiedTime: new Date()
+    }
+    let title = body.title;
+    let content = body.content;
+    let abstract = body.abstract;
+    let tag = body.tag;
+    let modifiedTime = new Date();
+
+    checkValue(title, ctx, '标题');
+    checkValue(content, ctx, '内容');
+    checkValue(abstract, ctx, '摘要');
+
+    let article = await Article.findByIdAndUpdate(id, {$set: body}).catch(err => {
+        if (err.name === 'CastError') {
+            ctx.throw(402, {
+                code: 17,
+                data: null,
+                message: 'id不存在',
+                space: 50
+            });
+        } else {
+            ctx.throw(500, '服务器内部错误');
+        }
+    });
+
+    response(ctx, {
+        code: 1,
+        data: article,
+        message: null,
+        space: 50
+    });
+}
+
 module.exports = {
     create,
-    getById
+    getById,
+    deleteById,
+    update
 }

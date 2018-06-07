@@ -6,12 +6,11 @@ articleRouter = (router) => {
         .get('/', function(ctx) {
             ctx.response.body = '<h1>hello Koa</h1>';
         })
-        .get('/api', function(ctx) {
-            ctx.response.body = '<h1>hello Api</h1>';
-        })
-        // .get('/api/articles', articleController.getAllArticles)
+        .get('/article/getById', articleController.getById)
         // .post('/articles', articleController.createArticle)
-        .post('/article/create', articleController.create)
+        .put('/article/create', articleController.create)
+        .post('/article/update', articleController.update)
+        .delete('/article/deleteById', articleController.deleteById)
 }
 
 module.exports = articleRouter;
