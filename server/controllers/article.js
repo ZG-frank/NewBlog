@@ -3,7 +3,7 @@ const Article = require('../models/article');
 const jwt = require('koa-jwt');
 const config = require('../configs/');
 
-module.exports.create = async function(ctx) {
+create = async (ctx) => {
     let body = ctx.request.body;
     console.log(ctx.request,body);
 
@@ -15,15 +15,17 @@ module.exports.create = async function(ctx) {
     const createdTime = new Date();
     const modifiedTime = new Date();
     const commentCount = 0;
+
     if (title === '') {
-        ctx.throw(400, '标题不能为空');
+        ctx.throw(402, '标题不能为空');
     }
     if (content === '') {
-        ctx.throw(400, '文章内容不能为空');
+        ctx.throw(402, '文章内容不能为空');
     }
     if (abstract === '') {
-        ctx.throw(400, '摘要不能为空');
+        ctx.throw(402, '摘要不能为空');
     }
+
     const article = new Article({
         title,
         content,
@@ -34,18 +36,30 @@ module.exports.create = async function(ctx) {
         createdTime,
         modifiedTime,
     });
+
     let createResult = await article.save().catch(err => {
         ctx.throw(500, '服务器内部错误');
     });
+
     await Article.populate(createResult, { path: 'tag' }, function (err, result) {
         createResult = result;
         console.log(result)
-
     });
+
     console.log('文章创建成功');
+
     ctx.body = {
         success: true,
         article: createResult,
     };
 
+}
+
+getById = async (ctx) => {
+
+}
+
+module.exports = {
+    create,
+    getById
 }
