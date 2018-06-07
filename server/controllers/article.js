@@ -56,7 +56,26 @@ create = async (ctx) => {
 }
 
 getById = async (ctx) => {
+    const id = ctx.params.id;
 
+    if (!id) {
+        ctx.throw(402, 'id不能为空');
+    }
+
+    let getResult = await article.findById().catch(err => {
+        if (err.name === 'CastError') {
+            ctx.throw(402, 'id不存在');
+        } else {
+            ctx.throw(500, '服务器内部错误');
+        }
+    });
+
+    console.log('文章查询成功');
+
+    ctx.body = {
+        success: true,
+        article: getResult,
+    };
 }
 
 module.exports = {
