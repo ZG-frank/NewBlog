@@ -81,12 +81,30 @@ create = async (ctx) => {
 
 checkValue = (value, ctx, title) => {
     if (!value) {
-        ctx.throw(402, {
+        // ctx.status = 402;
+        // response(ctx, {
+        //     code: 13,
+        //     data: null,
+        //     message: `${title}不能为空`,
+        //     space: 50
+        // });
+        
+        // return;
+        ctx.type = 'application/json';
+        ctx.assert(value, 402, {
             code: 13,
             data: null,
             message: `${title}不能为空`,
             space: 50
-        });
+        })
+
+        // ctx.type = 'application/json';
+        // ctx.throw(402, {
+        //     code: 13,
+        //     data: null,
+        //     message: `${title}不能为空`,
+        //     space: 50
+        // });
     }
 }
 
@@ -103,7 +121,7 @@ getById = async (ctx) => {
     //     });
     // }
 
-    let getResult = await article.findById().catch(err => {
+    let getResult = await Article.findById(id).catch(err => {
         if (err.name === 'CastError') {
             ctx.throw(402, {
                 code: 17,
