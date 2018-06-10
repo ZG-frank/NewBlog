@@ -20,6 +20,7 @@ create = async (ctx) => {
     checkValue(title, ctx, '标题');
     checkValue(content, ctx, '内容');
     checkValue(abstract, ctx, '摘要');
+    // 简化
     // if (!title) {
     //     ctx.throw(402, {
     //         code: 13,
