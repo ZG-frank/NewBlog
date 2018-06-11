@@ -89,15 +89,19 @@ checkValue = (value, ctx, title) => {
         //     message: `${title}不能为空`,
         //     space: 50
         // });
+
+        // return false;
         
         // return;
+        console.log(ctx.type)
         ctx.type = 'application/json';
-        ctx.assert(value, 402, {
+        console.log(ctx.type)
+        ctx.assert(value, 402, JSON.stringify( {
             code: 13,
             data: null,
             message: `${title}不能为空`,
             space: 50
-        })
+        }));
 
         // ctx.type = 'application/json';
         // ctx.throw(402, {
@@ -106,6 +110,8 @@ checkValue = (value, ctx, title) => {
         //     message: `${title}不能为空`,
         //     space: 50
         // });
+    } else {
+        return true;
     }
 }
 
