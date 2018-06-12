@@ -20,31 +20,6 @@ create = async (ctx) => {
     checkValue(title, ctx, '标题');
     checkValue(content, ctx, '内容');
     checkValue(abstract, ctx, '摘要');
-    // 简化
-    // if (!title) {
-    //     ctx.throw(402, {
-    //         code: 13,
-    //         data: null,
-    //         message: '标题不能为空',
-    //         space: 50
-    //     });
-    // }
-    // if (!content) {
-    //     ctx.throw(402, {
-    //         code: 13,
-    //         data: null,
-    //         message: '文章内容不能为空',
-    //         space: 50
-    //     });
-    // }
-    // if (!abstract) {
-    //     ctx.throw(402, {
-    //         code: 13,
-    //         data: null,
-    //         message: '摘要不能为空',
-    //         space: 50
-    //     });
-    // }
 
     let article = new Article({
         title,
@@ -81,18 +56,7 @@ create = async (ctx) => {
 }
 
 checkValue = (value, ctx, title) => {
-    if (!value) {
-        // ctx.status = 402;
-        // response(ctx, {
-        //     code: 13,
-        //     data: null,
-        //     message: `${title}不能为空`,
-        //     space: 50
-        // });
-
-        // return false;
-        
-        // return;
+    // if (!value) {
         console.log(ctx.type)
         ctx.type = 'application/json';
         console.log(ctx.type)
@@ -103,16 +67,18 @@ checkValue = (value, ctx, title) => {
             space: 50
         }));
 
-        // ctx.type = 'application/json';
-        // ctx.throw(402, {
-        //     code: 13,
-        //     data: null,
-        //     message: `${title}不能为空`,
-        //     space: 50
-        // });
-    } else {
-        return true;
-    }
+    //     console.log(ctx.type)
+    //     ctx.type = 'application/json';
+    //     console.log(ctx.type)
+    //     ctx.throw(402, JSON.stringify({
+    //         code: 13,
+    //         data: null,
+    //         message: `${title}不能为空`,
+    //         space: 50
+    //     }));
+    // } else {
+    //     return true;
+    // }
 }
 
 getById = async (ctx) => {
