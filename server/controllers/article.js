@@ -85,14 +85,6 @@ getById = async (ctx) => {
     let id = ctx.params.id;
 
     checkValue(id, ctx, 'id');
-    // if (!id) {
-    //     ctx.throw(402, {
-    //         code: 13,
-    //         data: null,
-    //         message: 'id不能为空',
-    //         space: 50
-    //     });
-    // }
 
     let getResult = await Article.findById(id).catch(err => {
         if (err.name === 'CastError') {
@@ -108,11 +100,6 @@ getById = async (ctx) => {
     });
 
     console.log('文章查询成功');
-
-    // ctx.body = {
-    //     success: true,
-    //     article: getResult,
-    // };
 
     response(ctx, {
         code: 1,
