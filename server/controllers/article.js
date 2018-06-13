@@ -116,12 +116,12 @@ deleteById = async (ctx) => {
 
     let result = await Article.findByIdAndRemove(id).catch(err => {
         if (err.name === 'CastError') {
-            ctx.throw(402, {
+            ctx.throw(402, JSON.stringify({
                 code: 17,
                 data: null,
                 message: 'id不存在',
                 space: 50
-            });
+            }));
         } else {
             this.throw(500, '服务器内部错误');
         }
