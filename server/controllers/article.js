@@ -47,7 +47,7 @@ create = async (ctx) => {
     //     success: true,
     //     article: createResult,
     // };
-    response(ctx, {
+    response.responseSuccess(ctx, {
         code: 1,
         data: createResult,
         message: null,
@@ -88,20 +88,25 @@ getById = async (ctx) => {
 
     let getResult = await Article.findById(id).catch(err => {
         if (err.name === 'CastError') {
-            ctx.throw(402, {
+            response.responseError(ctx, {
                 code: 17,
                 data: null,
                 message: 'id不存在',
                 space: 50
             });
         } else {
-            ctx.throw(500, '服务器内部错误');
+            response.responseError(ctx, {
+                code: 17,
+                data: null,
+                message: '服务器内部错误',
+                space: 50
+            });
         }
     });
 
     console.log('文章查询成功');
 
-    response(ctx, {
+    response.responseSuccess(ctx, {
         code: 1,
         data: getResult,
         message: null,
@@ -116,6 +121,12 @@ deleteById = async (ctx) => {
 
     let result = await Article.findByIdAndRemove(id).catch(err => {
         if (err.name === 'CastError') {
+            response.responseError(ctx, {
+                code: 17,
+                data: null,
+                message: 'id不存在',
+                space: 50
+            });
             ctx.throw(402, JSON.stringify({
                 code: 17,
                 data: null,
@@ -123,6 +134,12 @@ deleteById = async (ctx) => {
                 space: 50
             }));
         } else {
+            response.responseError(ctx, {
+                code: 17,
+                data: null,
+                message: 'id不存在',
+                space: 50
+            });
             this.throw(500, '服务器内部错误');
         }
     });
