@@ -1,13 +1,4 @@
 
-formatResponse = (ctx, data) => {
-    ctx.body = {
-        code: data.code,
-        message: data.message,
-        data: data.data,
-        space: data.space
-    };
-}
-
 responseSuccess = (ctx, data) => {
     ctx.body = {
         code: data.code,
@@ -27,7 +18,6 @@ responseError = (ctx, status, data) => {
 }
 
 module.exports = {
-    formatResponse,
     responseSuccess,
     responseError
 };
