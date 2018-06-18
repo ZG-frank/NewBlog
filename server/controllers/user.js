@@ -1,4 +1,4 @@
-const Article = require('../models/article');
+const User = require('../models/user');
 const response = require('../middlewares/formatResponse');
 // import md5 from 'md5';
 const jwt = require('koa-jwt');
@@ -6,7 +6,6 @@ const config = require('../configs/');
 
 create = async (ctx) => {
     let body = ctx.request.body;
-    console.log(ctx.request,body);
 
     let title = body.title;
     let content = body.content;
