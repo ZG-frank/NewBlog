@@ -135,6 +135,7 @@ update = async (ctx) => {
         ...body,
         modifiedTime: new Date()
     }
+    
     let title = body.title;
     let content = body.content;
     let abstract = body.abstract;
