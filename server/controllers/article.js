@@ -32,7 +32,7 @@ create = async (ctx) => {
         modifiedTime,
     });
 
-    let createResult = await article.save().catch(err => {
+    let createResult = await Article.save().catch(err => {
         response.responseError(ctx, 500, {
             code: 17,
             data: null,

@@ -31,7 +31,7 @@ create = async (ctx) => {
         modifiedTime,
     });
 
-    let createResult = await article.save().catch(err => {
+    let createResult = await User.save().catch(err => {
         response.responseError(ctx, 500, {
             code: 17,
             data: null,
@@ -40,7 +40,7 @@ create = async (ctx) => {
         });
     });
 
-    await Article.populate(createResult, { path: 'tag' }, function (err, result) {
+    await User.populate(createResult, { path: 'tag' }, function (err, result) {
         createResult = result;
         console.log(result)
     });
@@ -69,7 +69,7 @@ getById = async (ctx) => {
 
     checkValue(id, ctx, 'id');
 
-    let getResult = await Article.findById(id).catch(err => {
+    let getResult = await User.findById(id).catch(err => {
         if (err.name === 'CastError') {
             response.responseError(ctx, 402, {
                 code: 17,
@@ -87,7 +87,7 @@ getById = async (ctx) => {
         }
     });
 
-    console.log('文章查询成功');
+    console.log('用户查询成功');
 
     response.responseSuccess(ctx, {
         code: 1,
@@ -135,7 +135,7 @@ update = async (ctx) => {
         ...body,
         modifiedTime: new Date()
     }
-    
+
     let title = body.title;
     let content = body.content;
     let abstract = body.abstract;
