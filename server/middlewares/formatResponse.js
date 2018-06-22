@@ -17,6 +17,21 @@ responseError = (ctx, status, data) => {
     }));
 }
 
+checkValue = (value, ctx, title) => {
+    // if (!value) {
+    console.log(ctx.type)
+    ctx.type = 'application/json';
+    console.log(ctx.type)
+
+    ctx.assert(value, 402, JSON.stringify( {
+        code: 13,
+        data: null,
+        message: `${title}不能为空`,
+        space: 50
+    }));
+
+}
+
 module.exports = {
     responseSuccess,
     responseError
