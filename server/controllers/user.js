@@ -4,6 +4,40 @@ const response = require('../middlewares/formatResponse');
 const jwt = require('koa-jwt');
 const config = require('../configs/');
 
+login = async (ctx) => {
+    let body = ctx.request.body;
+
+    let username = body.username;
+    let secret = body.secret;
+    
+    let getResult = await User.findById(id).catch(err => {
+        if (err.name === 'CastError') {
+            response.responseError(ctx, 402, {
+                code: 17,
+                data: null,
+                message: 'id不存在',
+                space: 50
+            });
+        } else {
+            response.responseError(ctx, 500, {
+                code: 17,
+                data: null,
+                message: '服务器内部错误',
+                space: 50
+            });
+        }
+    });
+
+    console.log('用户查询成功');
+
+    response.responseSuccess(ctx, {
+        code: 1,
+        data: getResult,
+        message: null,
+        space: 50
+    });
+}
+
 create = async (ctx) => {
     let body = ctx.request.body;
 
