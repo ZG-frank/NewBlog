@@ -70,7 +70,7 @@ create = async (ctx) => {
             code: 17,
             data: null,
             message: '服务器内部错误',
-            space: 50,
+            space: 50
         });
     });
 
