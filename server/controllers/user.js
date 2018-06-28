@@ -41,26 +41,17 @@ login = async (ctx) => {
 create = async (ctx) => {
     let body = ctx.request.body;
 
-    let title = body.title;
-    let content = body.content;
-    let abstract = body.abstract;
-    let isPublished = body.isPublished;
-    let tag = body.tag;
+    let username = body.username;
+    let secret = body.secret;
     let createdTime = new Date();
     let modifiedTime = new Date();
-    let commentCount = 0;
 
-    checkValue(title, ctx, '标题');
-    checkValue(content, ctx, '内容');
-    checkValue(abstract, ctx, '摘要');
+    checkValue(username, ctx, '名字');
+    checkValue(secret, ctx, '密码');
 
     let article = new Article({
-        title,
-        content,
-        abstract,
-        isPublished,
-        tag,
-        commentCount,
+        username,
+        secret,
         createdTime,
         modifiedTime,
     });
@@ -74,12 +65,12 @@ create = async (ctx) => {
         });
     });
 
-    await User.populate(createResult, { path: 'tag' }, function (err, result) {
+    await User.populate(createResult, function (err, result) {
         createResult = result;
         console.log(result)
     });
 
-    console.log('文章创建成功');
+    console.log('用户创建成功');
 
     response.responseSuccess(ctx, {
         code: 1,
