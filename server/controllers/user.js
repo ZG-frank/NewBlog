@@ -67,7 +67,6 @@ create = async (ctx) => {
 
     await User.populate(createResult, function (err, result) {
         createResult = result;
-        console.log(result)
     });
 
     console.log('用户创建成功');
