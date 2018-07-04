@@ -26,7 +26,6 @@ checkValue = (value, ctx, title) => {
         message: `${title}不能为空`,
         space: 50
     }));
-
 }
 
 module.exports = {
