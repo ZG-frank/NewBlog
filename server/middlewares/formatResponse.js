@@ -20,7 +20,7 @@ responseError = (ctx, status, data) => {
 checkValue = (value, ctx, title) => {
     ctx.type = 'application/json';
 
-    ctx.assert(value, 402, JSON.stringify( {
+    ctx.assert(value, 402, JSON.stringify({
         code: 13,
         data: null,
         message: `${title}不能为空`,
