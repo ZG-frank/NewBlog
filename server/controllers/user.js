@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const response = require('../middlewares/formatResponse');
-// import md5 from 'md5';
 const jwt = require('koa-jwt');
 const config = require('../configs/');
 
