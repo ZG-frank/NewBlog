@@ -1,4 +1,4 @@
-const userController = require('../../controllers/user');
+const userController = require('../../services/user');
 
 userRouter = (router) => {
     router

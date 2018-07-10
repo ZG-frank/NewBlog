@@ -1,5 +1,5 @@
 // import verify from '../../middleware/verify.js';
-const articleController = require('../../controllers/article');
+const articleController = require('../../services/article');
 
 articleRouter = (router) => {
     router
