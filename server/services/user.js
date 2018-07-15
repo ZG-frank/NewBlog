@@ -187,6 +187,7 @@ update = async (ctx) => {
 }
 
 module.exports = {
+    login,
     create,
     getById,
     deleteById,
