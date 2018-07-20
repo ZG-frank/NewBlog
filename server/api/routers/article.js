@@ -10,6 +10,7 @@ articleRouter = (router) => {
         // .post('/articles', articleController.createArticle)
         .put('/article/create', articleServices.create)
         .post('/article/update', articleServices.update)
+        .post('/article/publish', articleServices.publish)
         .delete('/article/deleteById', articleServices.deleteById)
 }
 
