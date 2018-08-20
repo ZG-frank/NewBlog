@@ -6,12 +6,12 @@ articleRouter = (router) => {
         .get('/', function(ctx) {
             ctx.response.body = '<h1>hello Koa</h1>';
         })
-        .get('/article/getById', articleServices.getById)
+        .get('/article/getById/:id', articleServices.getById)
         // .post('/articles', articleController.createArticle)
-        .put('/article/create', articleServices.create)
-        .post('/article/update', articleServices.update)
-        .post('/article/publish', articleServices.publish)
-        .delete('/article/deleteById', articleServices.deleteById)
+        .post('/article/create', articleServices.create)
+        .put('/article/update', articleServices.update)
+        .put('/article/publish', articleServices.publish)
+        .delete('/article/deleteById/:id', articleServices.deleteById)
 }
 
 

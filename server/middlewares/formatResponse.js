@@ -1,10 +1,9 @@
 
 responseSuccess = (ctx, data) => {
     ctx.body = {
-        code: data.code,
+        code: 1,
         message: data.message,
-        data: data.data,
-        space: data.space
+        data: data.data
     };
 }
 
@@ -12,8 +11,15 @@ responseError = (ctx, status, data) => {
     ctx.throw(status, JSON.stringify({
         code: data.code,
         message: data.message,
-        data: data.data,
-        space: data.space
+        data: data.data
+    }));
+}
+
+responseSysError = (ctx) => {
+    ctx.throw(500, JSON.stringify({
+        code: 17,
+        message: '服务器内部错误',
+        data: null
     }));
 }
 
@@ -31,5 +37,6 @@ checkValue = (value, ctx, title) => {
 module.exports = {
     responseSuccess,
     responseError,
+    responseSysError,
     checkValue
 };
