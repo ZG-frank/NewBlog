@@ -69,7 +69,11 @@ getById = async (ctx) => {
 
     let getResult = await Article.findById(id).catch(err => {
         if (err.name === 'CastError') {
-            response.responseError(ctx, 'id不存在');
+            response.responseError(ctx, 402, {
+                code: 17,
+                data: null,
+                message: 'id不存在'
+            });
         } else {
             response.responseSysError(ctx);
         }
@@ -78,10 +82,8 @@ getById = async (ctx) => {
     console.log('文章查询成功');
 
     response.responseSuccess(ctx, {
-        code: 1,
         data: getResult,
-        message: null,
-        space: 50
+        message: null
     });
 }
 
@@ -93,8 +95,7 @@ deleteById = async (ctx) => {
             response.responseError(ctx, 402, {
                 code: 17,
                 data: null,
-                message: 'id不存在',
-                space: 50
+                message: 'id不存在'
             });
         } else {
             response.responseSysError(ctx);
@@ -168,19 +169,8 @@ publish = async (ctx) => {
     });
 
     response.responseSuccess(ctx, {
-        code: 1,
         data: article,
-        message: null,
-        space: 50
-    });
-}
-
-sysError = async (ctx, msg) => {
-    response.responseError(ctx, 402, {
-        code: 17,
-        data: null,
-        message: msg,
-        space: 50
+        message: null
     });
 }
 
