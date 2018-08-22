@@ -1,4 +1,3 @@
-
 responseSuccess = (ctx, data) => {
     ctx.body = {
         code: 1,
@@ -24,8 +23,6 @@ responseSysError = (ctx) => {
 }
 
 checkValue = (value, ctx, title) => {
-    ctx.type = 'application/json';
-
     ctx.assert(value, 402, JSON.stringify({
         code: 13,
         data: null,
