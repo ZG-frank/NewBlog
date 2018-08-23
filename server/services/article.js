@@ -64,8 +64,6 @@ checkValue = (value, ctx, title) => {
 // 根据id获取文章
 getById = async (ctx) => {
     let id = ctx.params.id;
-    
-    response.checkValue(id, ctx, 'id');
 
     let getResult = await Article.findById(id).catch(err => {
         if (err.name === 'CastError') {
@@ -116,6 +114,7 @@ update = async (ctx) => {
         ...body,
         modifiedTime: new Date()
     }
+    
     let title = body.title;
     let content = body.content;
     let abstract = body.abstract;
