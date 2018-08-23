@@ -115,9 +115,9 @@ update = async (ctx) => {
         modifiedTime: new Date()
     };
 
-    checkValue(body.title, ctx, '标题');
-    checkValue(body.content, ctx, '内容');
-    checkValue(body.abstract, ctx, '摘要');
+    response.checkValue(body.title, ctx, '标题');
+    response.checkValue(body.content, ctx, '内容');
+    response.checkValue(body.abstract, ctx, '摘要');
 
     let article = await Article.findByIdAndUpdate(id, {$set: newData}).catch(err => {
         if (err.name === 'CastError') {

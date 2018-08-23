@@ -26,8 +26,7 @@ checkValue = (value, ctx, title) => {
     ctx.assert(value, 402, JSON.stringify({
         code: 13,
         data: null,
-        message: `${title}不能为空`,
-        space: 50
+        message: `${title}不能为空`
     }));
 }
 
