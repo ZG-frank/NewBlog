@@ -113,17 +113,11 @@ update = async (ctx) => {
     let newData = {
         ...body,
         modifiedTime: new Date()
-    }
-    
-    let title = body.title;
-    let content = body.content;
-    let abstract = body.abstract;
-    let tag = body.tag;
-    let modifiedTime = new Date();
+    };
 
-    checkValue(title, ctx, '标题');
-    checkValue(content, ctx, '内容');
-    checkValue(abstract, ctx, '摘要');
+    checkValue(body.title, ctx, '标题');
+    checkValue(body.content, ctx, '内容');
+    checkValue(body.abstract, ctx, '摘要');
 
     let article = await Article.findByIdAndUpdate(id, {$set: newData}).catch(err => {
         if (err.name === 'CastError') {
