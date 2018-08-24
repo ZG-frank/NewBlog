@@ -6,7 +6,7 @@ articleRouter = (router) => {
         .get('/', function(ctx) {
             ctx.response.body = '<h1>hello Koa</h1>';
         })
-        .get('/article/getById/:id', articleServices.getById)
+        .get('/article/getById/:id?', articleServices.getById)
         // .post('/articles', articleController.createArticle)
         .post('/article/create', articleServices.create)
         .put('/article/update', articleServices.update)
