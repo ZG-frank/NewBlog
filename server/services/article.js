@@ -8,16 +8,21 @@ create = async (ctx) => {
     let body = ctx.request.body;
     console.log(ctx.request,body);
 
-    let title = body.title;
-    let content = body.content;
-    let abstract = body.abstract;
-    let isPublished = body.isPublished;
-    let tag = body.tag;
-    let createdTime = new Date();
-    let modifiedTime = new Date();
-    let commentCount = 0;
+    let title = body.title,
+        content = body.content,
+        abstract = body.abstract,
+        pathName = body.pathName,
+        isPublic = body.isPublic,
+        tags = body.tags,
+        status = body.status,
+        allowComment = body.allowComment,
+        createdAt = new Date(),
+        updatedAt = new Date(),
+        viewNum = 0,
+        commentNum = 0;
 
     response.checkValue(title, ctx, '标题');
+    response.checkValue(pathName, ctx, '查找路径');
     response.checkValue(content, ctx, '内容');
     response.checkValue(abstract, ctx, '摘要');
 
@@ -25,21 +30,25 @@ create = async (ctx) => {
         title,
         content,
         abstract,
-        isPublished,
-        tag,
-        commentCount,
-        createdTime,
-        modifiedTime,
+        pathName,
+        tags,
+        status,
+        isPublic,
+        viewNum,
+        commentNum,
+        allowComment,
+        createdAt,
+        updatedAt
     });
 
     let createResult = await newArticle.save().catch(err => {
         response.responseSysError(ctx);
     });
 
-    await Article.populate(createResult, { path: 'tag' }, function (err, result) {
-        createResult = result;
-        console.log(result)
-    });
+    // await Article.populate(createResult, { path: 'tag' }, function (err, result) {
+    //     createResult = result;
+    //     console.log(result)
+    // });
 
     console.log('文章创建成功');
 
@@ -59,6 +68,30 @@ checkValue = (value, ctx, title) => {
         message: `${title}不能为空`,
         space: 50
     }));
+}
+
+// 获取文章列表
+getArticles = async (ctx) => {
+    let body = ctx.request.body;
+
+    let getResult = await Article.findById(id).catch(err => {
+        if (err.name === 'CastError') {
+            response.responseError(ctx, 402, {
+                code: 17,
+                data: null,
+                message: '没有结果'
+            });
+        } else {
+            response.responseSysError(ctx);
+        }
+    });
+
+    console.log('文章查询成功');
+
+    response.responseSuccess(ctx, {
+        data: getResult,
+        message: null
+    });
 }
 
 // 根据id获取文章
