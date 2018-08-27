@@ -21,6 +21,7 @@
   "homepage": "https://github.com/ZG-frank/NewBlog#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "jsonwebtoken": "^8.3.0",
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.1",
     "koa-compose": "^4.1.0",

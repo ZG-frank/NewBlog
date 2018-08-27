@@ -97,6 +97,8 @@ getArticles = async (ctx) => {
 // 根据id获取文章
 getById = async (ctx) => {
     let id = ctx.params.id;
+    let query = ctx.request.query;
+    console.log(query)
 
     let getResult = await Article.findById(id).catch(err => {
         if (err.name === 'CastError') {
@@ -141,7 +143,8 @@ deleteById = async (ctx) => {
 
 
 update = async (ctx) => {
-    let body = ctx.request.body;
+    let body = ctx.request.body,
+        id = body.id;
 
     let newData = {
         ...body,

@@ -1,23 +1,25 @@
 const fs = require('fs');
+const env = process.env;
 
 let config = {
     app: {
-        port: process.env.PORT || 3000,
+        port: env.PORT || 3000,
         baseApi: '/api'
     },
     mongodb: {
-        url: process.env.DB_URL || 'mongodb://localhost:27017/blog'
+        url: env.DB_URL || 'mongodb://localhost:27017/blog'
     },
-    jwt: {
-        secret: 'frankzhou'
+    token: {
+        secret: env.tokenSecret || 'frankzhou',
+        expiresIn: env.tokenExpiresIn || 3600,
     },
     mongodbSecret: {
-        user: 'frank',
-        pass: 'frank1984'
+        user: env.dbUser || 'frank',
+        pass: env.dbPass || 'frank1984'
     },
     admin: {
-        username: 'admin1984',
-        password: 'frank1984'
+        username: env.adminName || 'admin',
+        password: env.adminPass || 'admin',
     },
 }
 
