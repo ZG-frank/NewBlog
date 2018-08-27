@@ -13,17 +13,30 @@ module.exports = {
 
     verifyToken(ctx, token) {
         if (!token) {
-            return false;
+            return {
+                status: false,
+                message: 'No token'
+            };
         }
 
         try {
             let result = jwt.verify(token, secret);
-            return result;
+            return {
+                status: result,
+                message: 'Token verify success'
+            };
         } catch (err) {
             if ('TokenExpiredError' === err.name) {
-                ctx.throw(401, 'token expired,请及时本地保存数据！');
+                return {
+                    status: false,
+                    message: 'Token expired'
+                };
             }
-            ctx.throw(401, 'invalid token');
+
+            return {
+                status: false,
+                message: 'Token verify failed'
+            };
         }
     }
 }
