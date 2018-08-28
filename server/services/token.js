@@ -11,7 +11,7 @@ module.exports = {
         return token;
     },
 
-    verifyToken(ctx, token) {
+    verifyToken(token) {
         if (!token) {
             return {
                 status: false,

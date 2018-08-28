@@ -58,12 +58,12 @@ module.exports = class {
             });
         }
 
-        const result = tokenService.verifyToken(ctx, token);
+        const result = tokenService.verifyToken(token);
         if (result.status === false) {
             response.responseError(ctx, 402, {
                 code: 0,
                 data: null,
-                message: 'Token verify failed'
+                message: result.message
             });
         }
 

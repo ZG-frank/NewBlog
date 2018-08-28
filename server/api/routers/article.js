@@ -1,4 +1,5 @@
 // import verify from '../../middleware/verify.js';
+const verify = require('../../middlewares/vetify');
 const articleServices = require('../../services/article');
 
 articleRouter = (router) => {
