@@ -8,11 +8,12 @@ articleRouter = (router) => {
             ctx.response.body = '<h1>hello Koa</h1>';
         })
         .get('/article/getById/:id?', articleServices.getById)
+        .get('/article/list/', articleServices.getList)
         // .post('/articles', articleController.createArticle)
-        .post('/article/create', articleServices.create)
-        .put('/article/update', articleServices.update)
-        .put('/article/publish', articleServices.publish)
-        .delete('/article/deleteById/:id', articleServices.deleteById)
+        .post('/article/create', verify, articleServices.create)
+        .put('/article/update', verify, articleServices.update)
+        .put('/article/publish', verify, articleServices.publish)
+        .delete('/article/deleteById/:id', verify, articleServices.deleteById)
 }
 
 

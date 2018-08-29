@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const config = require('../configs');
-const response = require('../middlewares/formatResponse');
 
 let secret = config.token.secret;
 let expiresIn = config.token.expiresIn;
@@ -29,7 +28,7 @@ module.exports = {
             if ('TokenExpiredError' === err.name) {
                 return {
                     status: false,
-                    message: 'Token expired'
+                    message: '状态过期，请重新登录'
                 };
             }
 

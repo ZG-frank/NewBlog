@@ -1,7 +1,5 @@
 const Article = require('../models/article');
 const response = require('../middlewares/formatResponse');
-// import md5 from 'md5';
-const jwt = require('koa-jwt');
 // const config = require('../configs/');
 
 create = async (ctx) => {
@@ -15,11 +13,7 @@ create = async (ctx) => {
         isPublic = body.isPublic,
         tags = body.tags,
         status = body.status,
-        allowComment = body.allowComment,
-        createdAt = new Date(),
-        updatedAt = new Date(),
-        viewNum = 0,
-        commentNum = 0;
+        allowComment = body.allowComment;
 
     response.checkValue(title, ctx, '标题');
     response.checkValue(pathName, ctx, '查找路径');
@@ -34,11 +28,11 @@ create = async (ctx) => {
         tags,
         status,
         isPublic,
-        viewNum,
-        commentNum,
+        viewNum: 0,
+        commentNum: 0,
         allowComment,
-        createdAt,
-        updatedAt
+        createdAt: new Date(),
+        updatedAt: new Date()
     });
 
     let createResult = await newArticle.save().catch(err => {
@@ -70,30 +64,6 @@ checkValue = (value, ctx, title) => {
     }));
 }
 
-// 获取文章列表
-getArticles = async (ctx) => {
-    let body = ctx.request.body;
-
-    let getResult = await Article.findById(id).catch(err => {
-        if (err.name === 'CastError') {
-            response.responseError(ctx, 402, {
-                code: 17,
-                data: null,
-                message: '没有结果'
-            });
-        } else {
-            response.responseSysError(ctx);
-        }
-    });
-
-    console.log('文章查询成功');
-
-    response.responseSuccess(ctx, {
-        data: getResult,
-        message: null
-    });
-}
-
 // 根据id获取文章
 getById = async (ctx) => {
     let id = ctx.params.id;
@@ -120,24 +90,27 @@ getById = async (ctx) => {
     });
 }
 
-deleteById = async (ctx) => {
-    let id = ctx.params.id;
+// 获取文章列表
+getList = async (ctx) => {
+    let body = ctx.request.body;
 
-    let result = await Article.findByIdAndRemove(id).catch(err => {
+    let getResult = await Article.find().sort({ updatedAt: -1 }).limit(5).catch(err => {
         if (err.name === 'CastError') {
             response.responseError(ctx, 402, {
                 code: 17,
                 data: null,
-                message: 'id不存在'
+                message: '没有结果'
             });
         } else {
             response.responseSysError(ctx);
         }
     });
 
+    console.log('文章查询成功');
+
     response.responseSuccess(ctx, {
-        data: null,
-        message: '删除成功'
+        data: getResult,
+        message: null
     });
 }
 
@@ -182,7 +155,7 @@ publish = async (ctx) => {
         modifiedTime: new Date()
     }
 
-    checkValue(isPublished, ctx, '是否发布');
+    response.checkValue(isPublished, ctx, '是否发布');
 
     let article = await Article.findByIdAndUpdate(id, {$set: newData}).catch(err => {
         if (err.name === 'CastError') {
@@ -203,10 +176,34 @@ publish = async (ctx) => {
     });
 }
 
+deleteById = async (ctx) => {
+    let id = ctx.params.id;
+
+    let result = await Article.findByIdAndRemove(id).catch(err => {
+        if (err.name === 'CastError') {
+            response.responseError(ctx, 402, {
+                code: 17,
+                data: null,
+                message: 'id不存在'
+            });
+        } else {
+            response.responseSysError(ctx);
+        }
+    });
+
+    console.log(result);
+
+    response.responseSuccess(ctx, {
+        data: null,
+        message: '删除成功'
+    });
+}
+
 module.exports = {
-    create,
     getById,
-    deleteById,
+    getList,
+    create,
     update,
-    publish
+    publish,
+    deleteById
 }

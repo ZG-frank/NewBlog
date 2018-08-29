@@ -20,53 +20,46 @@
 //     await next();
 // };
 
-const jwt = require('jsonwebtoken');
 const config = require('../configs');
 const response = require('../middlewares/formatResponse');
-
-let secret = config.token.secret;
-let expiresIn = config.token.expiresIn;
-
 const tokenService = require('../services/token')
 
-module.exports = class {
-    async beforeRestful(ctx, next) {
-        const isGettingUser = ctx.url.startsWith('/api/user');
-        const isGettingAdmin = ctx.url.startsWith('/api/admin/');
-        const isNotGet = ctx.url.startsWith('/api/') && ctx.method !== 'GET';
+module.exports = async (ctx, next) => {
+    const isGettingUser = ctx.url.startsWith('/api/user');
+    const isGettingAdmin = ctx.url.startsWith('/api/admin/');
+    const isNotGet = ctx.url.startsWith('/api/') && ctx.method !== 'GET';
 
-        if (!isGettingAdmin && !isGettingUser && !isNotGet) {
-            return next();
-        }
-
-        // const headers = ctx.request.headers;
-        let token = ctx.request.headers.authorization;
-        // try {
-        //     token = headers['authorization'];
-        // } catch (err) {
-        //     return ctx.body = {
-        //         status: 'fail',
-        //         description: err
-        //     }
-        // }
-
-        if (!token) {
-            response.responseError(ctx, 402, {
-                code: 0,
-                data: null,
-                message: 'Token verify failed'
-            });
-        }
-
-        const result = tokenService.verifyToken(token);
-        if (result.status === false) {
-            response.responseError(ctx, 402, {
-                code: 0,
-                data: null,
-                message: result.message
-            });
-        }
-
-        await next();
+    if (!isGettingAdmin && !isGettingUser && !isNotGet) {
+        return next();
     }
+
+    // const headers = ctx.request.headers;
+    let token = ctx.request.headers.authorization;
+    // try {
+    //     token = headers['authorization'];
+    // } catch (err) {
+    //     return ctx.body = {
+    //         status: 'fail',
+    //         description: err
+    //     }
+    // }
+
+    if (!token) {
+        response.responseError(ctx, 402, {
+            code: 0,
+            data: null,
+            message: 'Token verify failed'
+        });
+    }
+
+    const result = tokenService.verifyToken(token);
+    if (result.status === false) {
+        response.responseError(ctx, 402, {
+            code: 0,
+            data: null,
+            message: result.message
+        });
+    }
+
+    await next();
 }

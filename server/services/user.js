@@ -1,20 +1,19 @@
 const User = require('../models/user');
 const response = require('../middlewares/formatResponse');
-const jwt = require('jsonwebtoken');
 const md5 = require('md5');
 const config = require('../configs/');
 const tokenService = require('../services/token');
 
-login = async (ctx, next) => {
+login = async (ctx) => {
     let body = ctx.request.body;
 
-    let username = body.username,
+    let count = body.username || body.email,
         password = body.password;
 
-    response.checkValue(username, ctx, '名字');
+    response.checkValue(count, ctx, '账号');
     response.checkValue(password, ctx, '密码');
 
-    let result = await User.findOne({ username }).catch(err => {
+    let result = await User.findOne({ count }).catch(err => {
         if (err.name === 'CastError') {
             response.responseError(ctx, 402, {
                 code: 13,
@@ -43,13 +42,12 @@ login = async (ctx, next) => {
     console.log('用户登录成功');
 
     response.responseSuccess(ctx, {
-        code: 1,
         data: token,
         message: null
     });
 }
 
-logout = (ctx, next) => {
+logout = (ctx) => {
     let token = ctx.request.headers.authorization;
     console.log(ctx.request.headers)
     if (!token) {
@@ -69,7 +67,6 @@ logout = (ctx, next) => {
         });
     } else {
         response.responseSuccess(ctx, {
-            code: 1,
             data: null,
             message: 'Token deleted'
         });
@@ -121,7 +118,6 @@ create = async (ctx) => {
     console.log('用户创建成功');
 
     response.responseSuccess(ctx, {
-        code: 1,
         data: createResult,
         message: null
     });
@@ -147,7 +143,6 @@ getById = async (ctx) => {
     console.log('用户查询成功');
 
     response.responseSuccess(ctx, {
-        code: 1,
         data: getResult,
         message: null
     });
@@ -171,7 +166,6 @@ deleteById = async (ctx) => {
     });
 
     response.responseSuccess(ctx, {
-        code: 1,
         data: null,
         message: '删除成功'
     });
@@ -203,7 +197,6 @@ update = async (ctx) => {
     });
 
     response.responseSuccess(ctx, {
-        code: 1,
         data: newUser,
         message: null
     });
@@ -214,6 +207,6 @@ module.exports = {
     logout,
     create,
     getById,
-    deleteById,
-    update
+    update,
+    deleteById
 }
