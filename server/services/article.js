@@ -73,7 +73,7 @@ getById = async (ctx) => {
     let getResult = await Article.findById(id).catch(err => {
         if (err.name === 'CastError') {
             response.responseError(ctx, 402, {
-                code: 17,
+                code: 13,
                 data: null,
                 message: 'id不存在'
             });
@@ -92,24 +92,38 @@ getById = async (ctx) => {
 
 // 获取文章列表
 getList = async (ctx) => {
-    let body = ctx.request.body;
+    let query = ctx.request.query;
 
-    let getResult = await Article.find().sort({ updatedAt: -1 }).limit(5).catch(err => {
-        if (err.name === 'CastError') {
-            response.responseError(ctx, 402, {
-                code: 17,
-                data: null,
-                message: '没有结果'
-            });
-        } else {
-            response.responseSysError(ctx);
-        }
-    });
+    let pageIndex = parseInt(query.pageIndex) > 0 ? parseInt(query.pageIndex) : 1,
+        pageSize = parseInt(query.pageSize) > 0 ? parseInt(query.pageSize) : 5;
+
+    let getResult = await Article.find()
+        .skip((pageIndex - 1) * pageSize)
+        .limit(pageSize)
+        .sort({ updatedAt: -1 })
+        .catch(err => {
+            if (err.name === 'CastError') {
+                response.responseError(ctx, 402, {
+                    code: 13,
+                    data: null,
+                    message: '没有结果'
+                });
+            } else {
+                response.responseSysError(ctx);
+            }
+        });
+
+    let totalCount = await Article.count();
 
     console.log('文章查询成功');
 
     response.responseSuccess(ctx, {
-        data: getResult,
+        data: {
+            data: getResult,
+            pageIndex,
+            pageSize,
+            totalCount
+        },
         message: null
     });
 }
