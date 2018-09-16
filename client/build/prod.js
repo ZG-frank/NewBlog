@@ -6,13 +6,10 @@ const baseConfig = require("./base.js");
 module.exports = {
     ...baseConfig, 
     mode: 'production',
-    // entry: {
-    //     bundle: './src/index.js',
-    // },
     output: {
         ...baseConfig.output, 
-        filename: '[name].[chunkhash].js',
-        publicPath: MY_PATH.BUILD_PATH,
+        path: MY_PATH.BUILD_PATH,
+        filename: '[name].[chunkhash].js'
     },
     // module: {
     //     rules: [...devConfig.module.rules]

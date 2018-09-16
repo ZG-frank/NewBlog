@@ -1,6 +1,4 @@
 const path = require("path");
-// const HtmlWebpackPlugin = require("html-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const baseConfig = require("./base.js");
 const MY_PATH = require("./consts");
@@ -10,11 +8,8 @@ console.log(MY_PATH)
 module.exports = { 
     ...baseConfig,
     mode: "development",
-    // entry: MY_PATH.APP_PATH,
-    output: { 
-        path: MY_PATH.BUILD_PATH,
-        filename: '[name].[hash].js',
-    },
+    devtool: 'cheap-module-source-map',
+    target: 'web'
     // module: {
     //     rules: [
     //         {
@@ -81,6 +76,5 @@ module.exports = {
     //     noEmitOnErrors: true, // NoEmitOnErrorsPlugin
     //     concatenateModules: true //ModuleConcatenationPlugin
     // }
-    devtool: 'cheap-module-source-map',
-    target: 'web'
+    
 }
