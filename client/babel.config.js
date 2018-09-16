@@ -11,7 +11,8 @@ const plugins = [
     ["import", { 
         "libraryName": "antd",
         "style": "css"
-    }]
+    }],
+    ["@babel/plugin-proposal-class-properties"]
 ];
   
 module.exports = { presets, plugins };

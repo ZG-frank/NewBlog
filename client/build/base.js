@@ -1,19 +1,58 @@
-var path = require("path");
+const path = require("path");
 const MY_PATH = require("./consts");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const devMode = process.env.NODE_ENV !== 'production';
+
+console.log(process.env.NODE_ENV,devMode)
 
 module.exports = { 
-    entry: 
-    //  '/src/index.js',
-    MY_PATH.APP_PATH,
+    entry: {
+        main: MY_PATH.APP_PATH,
+        // vendors: [
+        //     "antd",
+        //     // "prop-types",
+        //     "react",
+        //     "react-dom",
+        //     // "react-redux",
+        //     // "react-router-dom",
+        //     // "react-router-redux",
+        //     // "redux"
+        // ] //分离第三方库,可自定义增减
+    },
     output: { 
         path: MY_PATH.BUILD_PATH,
-        chunkFilename: "[name].[hash].js",
-        filename: "[name].[hash].js",
-        sourceMapFilename: "[name].map",
-        publicPath: "/"
+        filename: '[name].[chunkhash].js',
     },
     module: {
         rules: [
+            {
+                test: /\.js$/,
+                include: MY_PATH.APP_PATH,
+                exclude: /node_modules/,
+                loader: 'babel-loader?cacheDirectory=true'
+            },
+            {
+                test: /(\.less|\.css)$/,
+                // use: [
+                //     { loader : "style-loader" }, 
+                //     { loader : "css-loader" }, 
+                //     { loader : "less-loader" }, 
+                //     {
+                //         loader : "less-loader",
+                //         options: {
+                //             javascriptEnabled: true
+                //         }
+                //     }
+                // ]
+                use: [
+                    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'less-loader',
+                ],
+                // use: ["style-loader", "css-loader", "less-loader"]
+            },
             // {
             //     test: /\.js$/,
             //     enforce: "pre",
@@ -38,5 +77,22 @@ module.exports = {
             // }
         ]
     },
-    plugins: []
+    plugins: [
+        new MiniCssExtractPlugin({
+            //提取为外部css代码
+            filename: devMode ? '[name].css' : '[name].[hash].css',
+            chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(MY_PATH.WEB_PUBLIC, 'index.html')
+        }),
+        new CleanWebpackPlugin(['dist'], {
+            // Default: webpack位置所在的文件夹
+            root: MY_PATH.ROOT_PATH,
+        }),
+        
+    ],
+    resolve: {
+        alias: {}
+    }
 }

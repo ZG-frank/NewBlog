@@ -2,10 +2,9 @@
   "name": "Newblog",
   "version": "1.0.0",
   "description": "Peosonal Blog Front",
-  "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --mode development --progress --config build/dev.js --hot --open",
-    "build": "webpack --mode production --progress --config build/prod.js"
+    "dev": "webpack-dev-server --progress --config build/dev.js --hot --open",
+    "build": "webpack --progress --config build/prod.js"
   },
   "repository": {
     "type": "git",
@@ -23,27 +22,24 @@
   "homepage": "https://github.com/ZG-frank/NewBlog#readme",
   "dependencies": {
     "antd": "^3.9.0",
-    "echarts": "^4.1.0",
-    "lodash": "^4.17.10",
-    "moment": "^2.22.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.0.1",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.2",
-    "babel-plugin-import": "^1.8.0",
+    "babel-plugin-import": "^1.9.1",
+    "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.0",
-    "eslint": "^5.5.0",
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "style-loader": "^0.23.0",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.7",
-    "webpack-merge": "^4.1.4"
+    "webpack-dev-server": "^3.1.7"
   }
 }
