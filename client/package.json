@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Peosonal Blog Front",
   "scripts": {
-    "dev": "webpack-dev-server --mode development --progress --config build/dev.js --hot --open",
-    "build": "webpack --mode production --progress --config build/prod.js"
+    "dev": "webpack-dev-server --progress --config build/dev.js --hot --open",
+    "build": "webpack --progress --config build/prod.js"
   },
   "repository": {
     "type": "git",

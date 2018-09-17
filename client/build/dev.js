@@ -8,7 +8,7 @@ console.log(MY_PATH)
 module.exports = { 
     ...baseConfig,
     mode: "development",
-    devtool: 'cheap-module-source-map',
+    devtool: 'cheap-module-eval-source-map',
     target: 'web'
     // module: {
     //     rules: [

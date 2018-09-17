@@ -2,6 +2,7 @@ const MY_PATH = require('./consts');
 const devConfig = require('./dev');
 const webpack = require('webpack');
 const baseConfig = require("./base.js");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     ...baseConfig, 
@@ -11,14 +12,26 @@ module.exports = {
         path: MY_PATH.BUILD_PATH,
         filename: '[name].[chunkhash].js'
     },
-    // module: {
-    //     rules: [...devConfig.module.rules]
-    // },
+    module: {
+        rules: [
+            ...baseConfig.module.rules,
+            {
+                test: /(\.less|\.css)$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'less-loader',
+                ],
+            },
+        ]
+    },
     plugins: [
         ...baseConfig.plugins,
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production')
-        })
+        new MiniCssExtractPlugin({
+            //提取为外部css代码
+            filename: '[name].[hash].css',
+            chunkFilename: '[id].[hash].css'
+        }),
     ],
     devtool: 'none'
 }

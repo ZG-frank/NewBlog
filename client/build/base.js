@@ -46,12 +46,7 @@ module.exports = {
                 //         }
                 //     }
                 // ]
-                use: [
-                    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'less-loader',
-                ],
-                // use: ["style-loader", "css-loader", "less-loader"]
+                use: ["style-loader", "css-loader", "less-loader"]
             },
             // {
             //     test: /\.js$/,
@@ -78,11 +73,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            //提取为外部css代码
-            filename: devMode ? '[name].css' : '[name].[hash].css',
-            chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
-        }),
         new HtmlWebpackPlugin({
             template: path.resolve(MY_PATH.WEB_PUBLIC, 'index.html')
         }),
