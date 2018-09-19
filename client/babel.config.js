@@ -3,6 +3,7 @@ const presets = [
         "targets": {
             "browsers": ["last 2 versions", "safari >= 7"]
         },
+        "modules": false
     }],
     ["@babel/react"]
   ];
