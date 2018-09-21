@@ -10,7 +10,8 @@ module.exports = {
     output: {
         ...baseConfig.output, 
         path: MY_PATH.BUILD_PATH,
-        filename: '[name].[chunkhash].js'
+        filename: '[name].[hash].js',
+        chunkFilename: "[name].[chunkhash].js",
     },
     module: {
         rules: [
