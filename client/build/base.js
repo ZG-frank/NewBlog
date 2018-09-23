@@ -84,5 +84,22 @@ module.exports = {
     ],
     resolve: {
         alias: {}
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all'
+                },
+                // styles: {
+                //     name: 'index',
+                //     test: /.stylus|css$/,
+                //     chunks: 'all',
+                //     enforce: true
+                // }
+            }
+        }
     }
 }
