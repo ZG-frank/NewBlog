@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const devMode = process.env.NODE_ENV !== 'production';
+const webpack = require("webpack");
 
 console.log(process.env.NODE_ENV,devMode)
 
@@ -80,6 +81,7 @@ module.exports = {
             // Default: webpack位置所在的文件夹
             root: MY_PATH.ROOT_PATH,
         }),
+        new webpack.HashedModuleIdsPlugin(),
         
     ],
     resolve: {

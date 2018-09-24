@@ -3,8 +3,6 @@ const path = require("path");
 const baseConfig = require("./base.js");
 const MY_PATH = require("./consts");
 
-console.log(MY_PATH)
-
 module.exports = { 
     ...baseConfig,
     mode: "development",
