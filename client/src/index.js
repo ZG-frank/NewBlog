@@ -1,13 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Icon, Dropdown, Menu } from 'antd';
+import { Button, Dropdown, Menu } from 'antd';
 import './index.less';
-
-console.log([1,2,3].includes(2),'test es6');
-let a = () => {
-    return 3;
-}
-console.log(a(), 'test arrow function');
 
 const menu = (
     <Menu>
@@ -28,7 +22,6 @@ ReactDOM.render(
         <Dropdown overlay={menu} trigger={['click']}>
             <Button>Hello, world!</Button>
         </Dropdown>
-        <Icon type="right-square" />
     </div>
     ,
     document.getElementById('root')
