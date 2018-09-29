@@ -1,30 +1,17 @@
 const path = require("path");
 const MY_PATH = require("./consts");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const devMode = process.env.NODE_ENV !== 'production';
 const webpack = require("webpack");
-
-console.log(process.env.NODE_ENV,devMode)
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const SizePlugin = require('size-plugin');
 
 module.exports = { 
     entry: {
-        main: MY_PATH.APP_PATH,
-        // vendors: [
-        //     "antd",
-        //     // "prop-types",
-        //     "react",
-        //     "react-dom",
-        //     // "react-redux",
-        //     // "react-router-dom",
-        //     // "react-router-redux",
-        //     // "redux"
-        // ] //分离第三方库,可自定义增减
+        main: MY_PATH.APP_PATH
     },
     output: { 
         path: MY_PATH.BUILD_PATH,
-        filename: '[name].[hash].js',
+        filename: 'js/[name].js',
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -35,57 +22,40 @@ module.exports = {
                 loader: 'babel-loader?cacheDirectory=true'
             },
             {
-                test: /(\.less|\.css)$/,
-                // use: [
-                //     { loader : "style-loader" }, 
-                //     { loader : "css-loader" }, 
-                //     { loader : "less-loader" }, 
-                //     {
-                //         loader : "less-loader",
-                //         options: {
-                //             javascriptEnabled: true
-                //         }
-                //     }
-                // ]
-                use: ["style-loader", "css-loader", "less-loader"]
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    outputPath: 'images'
+                }
             },
-            // {
-            //     test: /\.js$/,
-            //     enforce: "pre",
-            //     include: MY_PATH.APP_PATH,
-            //     exclude: [
-            //         path.resolve(MY_PATH.ROOT_PATH, "node_modules"),
-            //         path.resolve(MY_PATH.WEB_PUBLIC)
-            //     ],
-            //     // loader: ['babel-loader?cacheDirectory']
-            //     loader: ["happypack/loader?id=happy-babel-js"]
-            // },
-            // {
-            //     test: /\.(jpg|png|gif)$/,
-            //     loader: ["file-loader", "url-loader?limit=100000"]
-            // },
-            // {
-            //     test: /\.(eot|woff|svg|ttf|woff2|gif|appcache|webp)(\?|$)/,
-            //     loader: [
-            //         "file-loader?name=[name].[ext]",
-            //         "url-loader?limit=100000"
-            //     ]
-            // }
+            {
+                test: /\.(woff|woff2|ttf|eot)(\?[tv]=[\d.]+)*$/,
+                use: ['file-loader?name=[name].[ext]']
+            }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(MY_PATH.WEB_PUBLIC, 'index.html')
-        }),
-        new CleanWebpackPlugin(['dist'], {
-            // Default: webpack位置所在的文件夹
-            root: MY_PATH.ROOT_PATH,
+            template: 'index.html',
+            inject: true,
+            favicon: path.resolve('favicon.ico'),
+            minify: {
+                collapseWhitespace: true,
+            }
         }),
         new webpack.HashedModuleIdsPlugin(),
-        
+        new SizePlugin()
     ],
     resolve: {
-        alias: {}
+        modules: [
+            MY_PATH.APP_PATH,
+            'node_modules',
+        ],
+        alias: {
+            '@': MY_PATH.APP_PATH
+        },
+        extensions: ['*', '.js', '.jsx', '.json', '.less', '.css']
     },
     optimization: {
         splitChunks: {
