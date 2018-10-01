@@ -1,13 +1,13 @@
-import React, {Component} from 'react'
-import {bindActionCreators} from 'redux'
-import {connect} from 'react-redux'
-import {message} from 'antd'
-import CryptoJS from 'crypto-js'
-import FormBox from '../components/FormBox'
-import Cookies from 'js-cookie'
-import * as action from '../store/action'
-import * as ROOT_action from '@/store/ROOT/action'
-import './index.less'
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { message } from 'antd';
+import CryptoJS from 'crypto-js';
+import FormBox from '../components/FormBox';
+import Cookies from 'js-cookie';
+import * as action from '../store/action';
+import * as ROOT_action from '@/store/ROOT/action';
+import './index.less';
 
 @connect(
     state => ({ ...state.Login }),
@@ -48,11 +48,12 @@ class Login extends Component {
 
     render() {
         return (
-            <div className='Login_wrap clear clearFix'>
-                <div className='form P_auto'>
-                    <span className='font icon-react'></span>
-                    <FormBox submit={this.submit} {...this.props}/>
+            <div className="login-form P_auto">
+                <div className="login-title flex-center">
+                    <i className="font icon-react m-r-8" />
+                    <span className="">Blog Admin</span>
                 </div>
+                <FormBox submit={this.submit} {...this.props}/>
             </div>
         )
     }
