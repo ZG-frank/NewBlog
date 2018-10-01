@@ -8,9 +8,9 @@ import Cookies from 'js-cookie';
 class Routers extends Component {
     constructor(props) {
         super(props)
-        console.log(this)
         this.pathname = this.props.location.pathname
     }
+
     checkJsessionID = () =>{
         if (this.props.location.pathname != '/login') {
             if (!Cookies.get('JSESSIONID')) {
@@ -18,14 +18,15 @@ class Routers extends Component {
             }
         } else {
             if (Cookies.get('JSESSIONID')) {
-                this.props.history.replace('/home')
+                this.props.history.replace('/dashboard')
             }
         }
     }
+
     componentWillMount() {
         if (this.pathname == '/') {
             if (Cookies.get('JSESSIONID')) {
-                this.props.history.replace('/home')
+                this.props.history.replace('/dashboard')
             } else {
                 this.props.history.replace('/login')
             }
@@ -33,9 +34,11 @@ class Routers extends Component {
             this.checkJsessionID()
         }
     }
+
     componentWillReceiveProps() {
-      this.checkJsessionID()
+        this.checkJsessionID()
     }
+
     render() {
         return (
             <Switch>
