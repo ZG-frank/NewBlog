@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Left from '../components/Left';
-import Right from '../components/Right';
+// import Left from '../components/Left';
+// import Right from '../components/Right';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import Cookies from 'js-cookie';
-import SiderMenu from '@/components/Sider';
+import SiderMenu from '@/components/SiderMenu';
 import Loading from '@/components/Loading';
 import routes from '@/config/routes'
 import './index.less';
