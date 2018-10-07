@@ -1,4 +1,4 @@
-export const changeLoading = loading =>(
+export const changeLoading = loading => (
     {
         type:'LOADING',
         loading:loading

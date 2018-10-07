@@ -3,8 +3,7 @@ const initState = {
 }
 
 const Login = (state = initState, action) =>{
-
-    const { loading } = action
+    const { loading } = action;
 
     switch (action.type) {
         case 'LOADING':
@@ -13,7 +12,7 @@ const Login = (state = initState, action) =>{
                 loading
             }
         default:
-            return state
+            return state;
     }
 }
 
